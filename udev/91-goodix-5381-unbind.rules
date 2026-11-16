@@ -1,0 +1,5 @@
+# Unbind Linux cdc_acm kernel driver from Goodix 27c6:5381 fingerprint sensor
+ACTION=="add", SUBSYSTEM=="usb", DRIVER=="cdc_acm", ATTRS{idVendor}=="27c6", ATTRS{idProduct}=="5381", RUN+="/bin/sh -c 'echo -n %k > /sys/bus/usb/drivers/cdc_acm/unbind'"
+
+# Allow user-space / fprintd access to the USB device node
+SUBSYSTEM=="usb", ATTR{idVendor}=="27c6", ATTR{idProduct}=="5381", MODE="0660", GROUP="plugdev", TAG+="uaccess"
